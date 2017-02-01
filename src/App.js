@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {TodoForm, TodoList} from './components/todo';
+import {addTodo, generateId} from './lib/todo-helpers';
 
 class App extends Component {
   constructor() {
@@ -16,6 +17,7 @@ class App extends Component {
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {
@@ -29,6 +31,17 @@ class App extends Component {
     // 2) Add an onChange event handler on the input element
   }
 
+  handleSubmit(event) {
+      event.preventDefault();
+      var newId = generateId();
+      var newTodo = {id: newId, isComplete: false, name: this.state.currentTodo};
+      var updatedTodos = addTodo(this.state.todos, newTodo);
+      this.setState({
+          todos: updatedTodos,
+          currentTodo: ""
+      });
+  }
+
   render() {
     return (
       <div className="App">
@@ -39,6 +52,7 @@ class App extends Component {
         <div className="Todo-App">
           <TodoForm
             handleInputChange={this.handleInputChange}
+            handleSubmit={this.handleSubmit}
             currentTodo={this.state.currentTodo}/>
           <TodoList todos={this.state.todos}/>
         </div>
