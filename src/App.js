@@ -5,23 +5,16 @@ import {TodoForm, TodoList} from './components/todo';
 import {addTodo, generateId} from './lib/todo-helpers';
 
 class App extends Component {
-  constructor() {
-    super(); // Calls the constructor of the Component class that we are extending
-    this.state = {
-      todos: [
-        { id: 1, name: "Learn JSX", isComplete: true },
-        { id: 2, name: "Build an app", isComplete: false },
-        { id: 3, name: "Get rich!", isComplete: false }
-      ],
-      currentTodo: ""
-    }
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
+  state = {
+    todos: [
+      { id: 1, name: "Learn JSX", isComplete: true },
+      { id: 2, name: "Build an app", isComplete: false },
+      { id: 3, name: "Get rich!", isComplete: false }
+    ],
+    currentTodo: ""
   }
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     this.setState({
       currentTodo: event.target.value
     });
@@ -32,7 +25,7 @@ class App extends Component {
     // 2) Add an onChange event handler on the input element
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
       event.preventDefault();
       var newId = generateId();
       var newTodo = {id: newId, isComplete: false, name: this.state.currentTodo};
@@ -44,7 +37,7 @@ class App extends Component {
       });
   }
 
-  handleEmptySubmit(event) {
+  handleEmptySubmit = (event) => {
       event.preventDefault();
       this.setState({
           errorMessage: "Please enter a todo name"
